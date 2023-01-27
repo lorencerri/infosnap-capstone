@@ -2,10 +2,9 @@ import { type NextPage } from "next";
 import Head from "next/head";
 
 import { AppHeader } from "../components/AppHeader";
-import { GuidesDisplay } from "../components/GuidesDisplay";
-import { Box, Divider, createStyles } from "@mantine/core";
+import { Resources } from "../components/Resources";
+import { Box, createStyles } from "@mantine/core";
 import { HeaderCreate } from "../components/HeaderCreate";
-import { IconFileInfo } from "@tabler/icons-react";
 
 const useStyles = createStyles(() => ({
     container: {
@@ -36,7 +35,7 @@ const Home: NextPage = () => {
                 <div className={classes.inner}>
                     <HeaderCreate />
                     <Box mb="xl" />
-                    <GuidesDisplay />
+                    <Resources />
                 </div>
             </div>
         </>
