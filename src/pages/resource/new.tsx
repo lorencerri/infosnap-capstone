@@ -26,20 +26,16 @@ import {
 } from "@tabler/icons-react";
 import { AppHeader } from "../../components/AppHeader";
 import { TextEditor } from "../../components/TextEditor";
+import { useSession } from "next-auth/react";
+import { SignInModal } from "../../components/SignInModal";
+import { NewResourceHeader } from "../../components/resources/NewResourceHeader";
+import { useState } from "react";
 
 const useStyles = createStyles(() => ({
     container: {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-    },
-
-    headerContainer: {
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        height: "100%",
-        padding: 0,
     },
 
     inner: {
@@ -50,45 +46,27 @@ const useStyles = createStyles(() => ({
 
 const NewGuide: NextPage = () => {
     const { classes } = useStyles();
-
+    const { data: session } = useSession();
+    const [stage, setStage] = useState(0);
+    console.log(stage);
     return (
         <>
             <Head>
                 <title>InfoSnap | New Resource</title>
-                <meta name="description" content="Short Guides In A Snap" />
+                <meta name="description" content="Resources In A Snap" />
             </Head>
 
             <AppHeader />
 
+            {!session && <SignInModal />}
+
             <div className={classes.container}>
                 <div className={classes.inner}>
-                    <Container className={classes.headerContainer} mb="xl">
-                        <Stack spacing={0}>
-                            <ActionIcon>
-                                <IconArrowBigUpFilled size={18} />
-                            </ActionIcon>
-                            <Center>1</Center>
-                            <ActionIcon>
-                                <IconArrowBigDownFilled size={18} />
-                            </ActionIcon>
-                        </Stack>
-                        <Space w="xs" />
-                        <Alert
-                            icon={<IconTextPlus />}
-                            title="Guide Creation Helper"
-                            color="gray"
-                            radius="md"
-                            variant="outline"
-                        >
-                            Welcome to the guide creation screen. As you
-                            navigate through this page, updates will be provided
-                            through this alert. To begin, please select the type
-                            of resource you&apos;re creating.
-                        </Alert>
-                    </Container>
+                    <NewResourceHeader stage={stage} />
                     <Space w="xl" />
                     <Select
                         mb="xl"
+                        onChange={() => setStage(1)}
                         placeholder="Type"
                         data={[
                             "Guide",
