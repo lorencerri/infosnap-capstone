@@ -7,7 +7,6 @@ import {
     Alert,
     createStyles,
 } from "@mantine/core";
-import { useCounter } from "@mantine/hooks";
 import {
     IconArrowBigUpFilled,
     IconArrowBigDownFilled,
@@ -32,35 +31,33 @@ type Prompt = {
 const prompts: Prompt[] = [
     {
         title: "Resource Creation Helper",
-        text: "Welcome to the resource creation screen! Use the arrow buttons on the left hand side to go through tips for each section. To begin, select the type of resource you're creating.",
+        text: "Welcome to the resource creation screen. This prompt will automatically update as you progress through the form. To begin, select the type of resource you're creating.",
     },
     {
-        title: "Resource Name",
+        title: "Resource Title",
         text: "Titles will be publicly searchable on the platform. So, keep it short but use specific keywords.",
+    },
+    {
+        title: "URL",
+        text: "If you have a URL relevant to the resource you're creating, enter it here. For example, if you're creating a guide on how to use a specific tool or package, you can enter the URL to the tool or package's website or specific page.",
+    },
+    {
+        title: "Text",
+        text: "You've completed all of the basics! Now, you can add some text to your resource. This can be a description, a tutorial, or anything else you'd like to add.",
+    },
+    {
+        title: "Almost there!",
+        text: "Once you're done, just press the 'Save & Publish' button to publish your resource. You'll be able to edit it later if you'd like.",
     },
 ];
 
 const NewResourceHeader = (props: { stage: number }) => {
     const { classes } = useStyles();
-    const [count, { increment, decrement }] = useCounter(props.stage, {
-        min: 0,
-        max: prompts.length - 1,
-    });
 
-    const { title, text } = prompts[count] as Prompt;
+    const { title, text } = prompts[props.stage] as Prompt;
 
     return (
         <Container className={classes.headerContainer} mb="xl">
-            <Stack spacing={0}>
-                <ActionIcon onClick={increment}>
-                    <IconArrowBigUpFilled size={18} />
-                </ActionIcon>
-                <Center>#{count + 1}</Center>
-                <ActionIcon onClick={decrement}>
-                    <IconArrowBigDownFilled size={18} />
-                </ActionIcon>
-            </Stack>
-            <Space w="xs" />
             <Alert
                 icon={<IconTextPlus />}
                 title={title}
